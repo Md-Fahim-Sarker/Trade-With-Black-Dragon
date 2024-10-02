@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Dragon Premium Post Generator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background-color: #1E1E1E;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        select, input {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #4CAF50;
+            background-color: #2b2b2b;
+            color: #ffffff;
+        }
+
+        .trade-inputs {
+            margin: 10px 0;
+            border: 1px solid #4CAF50;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .remove-trade {
+            color: red;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #post {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            background-color: #2b2b2b;
+            white-space: pre-wrap; /* Ensures line breaks are preserved */
+            width: 100%;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🐉 BLACK DRAGON PREMIUM 🐉</h1>
+
+<div class="container">
+    <label for="timezone">Select Time Zone:</label>
+    <select id="timezone">
+        <option value="UTC+0:00">UTC +0:00 🇬🇧</option>
+        <option value="UTC+1:00">UTC +1:00 🇩🇪</option>
+        <option value="UTC+2:00">UTC +2:00 🇮🇱</option>
+        <option value="UTC+3:00">UTC +3:00 🇷🇺</option>
+        <option value="UTC+4:00">UTC +4:00 🇦🇪</option>
+        <option value="UTC+5:00">UTC +5:00 🇵🇰</option>
+        <option value="UTC+6:00" selected>UTC +6:00 🇧🇩</option>
+        <option value="UTC+7:00">UTC +7:00 🇹🇭</option>
+        <option value="UTC+8:00">UTC +8:00 🇨🇳</option>
+        <option value="UTC+9:00">UTC +9:00 🇯🇵</option>
+        <option value="UTC+10:00">UTC +10:00 🇦🇺</option>
+        <option value="UTC-1:00">UTC -1:00 🇵🇹</option>
+        <option value="UTC-2:00">UTC -2:00 🇧🇴</option>
+        <option value="UTC-3:00">UTC -3:00 🇧🇷</option>
+        <option value="UTC-4:00">UTC -4:00 🇻🇪</option>
+        <option value="UTC-5:00">UTC -5:00 🇺🇸</option>
+        <option value="UTC-6:00">UTC -6:00 🇲🇽</option>
+        <option value="UTC-7:00">UTC -7:00 🇨🇦</option>
+        <option value="UTC-8:00">UTC -8:00 🇺🇸</option>
+        <option value="UTC-9:00">UTC -9:00 🇯🇵</option>
+        <option value="UTC-10:00">UTC -10:00 🇺🇸</option>
+    </select>
+
+    <label for="mtg">Select MTG:</label>
+    <select id="mtg">
+        <option value="1 STEP➕">1 STEP➕</option>
+        <option value="2 STEP➕">2 STEP➕</option>
+        <!-- Add more MTG options as needed -->
+    </select>
+
+    <label for="intervals">Select Intervals:</label>
+    <select id="intervals">
+        <option value="1 minute">1 minute</option>
+        <option value="2 minutes">2 minutes</option>
+        <option value="5 minutes">5 minutes</option>
+        <!-- Add more interval options as needed -->
+    </select>
+
+    <h3>Trades:</h3>
+    <div id="trade-container">
+        <div class="trade-inputs">
+            <input type="time" class="trade-time" placeholder="Time" required>
+            <select class="trade-pair">
+                <option value="NZDCHF-OTC">NZDCHF-OTC</option>
+                <option value="AUDUSD-OTC">AUDUSD-OTC</option>
+                <option value="EURUSD-OTC">EURUSD-OTC</option>
+                <!-- Add more pairs as needed -->
+            </select>
+            <select class="trade-action">
+                <option value="PUT">PUT</option>
+                <option value="CALL">CALL</option>
+            </select>
+            <span class="remove-trade" onclick="removeTrade(this)">❌</span>
+        </div>
+    </div>
+
+    <button onclick="addTrade()">Add More Trade</button>
+    <button onclick="generatePost()">Generate Post</button>
+    <button onclick="sendPost()">Send to Telegram</button>
+
+    <div id="post"></div>
+</div>
+
+<div class="footer">
+    ⚠️ AVOID GAP UP/DOWN & DOJI <br>
+    ⚠️ USE OUR SAFETY MARGIN RULES
+</div>
+
+<script>
+    let generatedPost = '';
+
+    function addTrade() {
+        const tradeContainer = document.getElementById('trade-container');
+        const newTradeDiv = document.createElement('div');
+        newTradeDiv.classList.add('trade-inputs');
+        
+        newTradeDiv.innerHTML = `
+            <input type="time" class="trade-time" placeholder="Time" required>
+            <select class="trade-pair">
+                <option value="NZDCHF-OTC">NZDCHF-OTC</option>
+                <option value="AUDUSD-OTC">AUDUSD-OTC</option>
+                <option value="EURUSD-OTC">EURUSD-OTC</option>
+                <!-- Add more pairs as needed -->
+            </select>
+            <select class="trade-action">
+                <option value="PUT">PUT</option>
+                <option value="CALL">CALL</option>
+            </select>
+            <span class="remove-trade" onclick="removeTrade(this)">❌</span>
+        `;
+
+        tradeContainer.appendChild(newTradeDiv);
+    }
+
+    function removeTrade(element) {
+        element.parentElement.remove();
+    }
+
+    function generatePost() {
+        const timezone = document.getElementById('timezone').value;
+        const mtg = document.getElementById('mtg').value;
+        const interval = document.getElementById('intervals').value;
+
+        const trades = [];
+        const tradeElements = document.querySelectorAll('.trade-inputs');
+
+        tradeElements.forEach(trade => {
+            const time = trade.querySelector('.trade-time').value;
+            const pair = trade.querySelector('.trade-pair').value;
+            const action = trade.querySelector('.trade-action').value;
+            if (time && pair && action) {
+                trades.push({ time, pair, action });
+            }
+        });
+
+        let postContent = `🐉 BLACK DRAGON PREMIUM 🐉\n\n`;
+        postContent += `⏰ Time Zone: ${timezone}\n`;
+        postContent += `MTG: ${mtg}\n`;
+        postContent += `Interval: ${interval}\n\n`;
+
+        trades.forEach(trade => {
+            postContent += `${trade.time}; ${trade.pair}; ${trade.action}\n`;
+        });
+
+        postContent += `‼️ AVOID GAP UP/DOWN & DOJI ‼️\n`;
+        postContent += `‼️ USE OUR SAFETY MARGIN RULES`;
+
+        document.getElementById('post').textContent = postContent;
+        generatedPost = postContent; // Store the generated post for sending later
+    }
+
+    function sendPost() {
+        if (!generatedPost) {
+            alert('Please generate a post before sending.');
+            return;
+        }
+
+        const botToken = 'YOUR_BOT_TOKEN'; // Replace with your bot token
+        const chatId = 'YOUR_CHAT_ID'; // Replace with your chat ID
+        const message = encodeURIComponent(generatedPost);
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}&parse_mode=Markdown`;
+
+        fetch(url)
+            .then(response => {
+                if (response.ok) {
+                    alert('Post sent successfully to Telegram!');
+                } else {
+                    alert('Error sending post to Telegram.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error sending post to Telegram.');
+            });
+    }
+</script>
+</body>
+</html>
